@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Schema xmlns="http://www.midgard-project.org/repligard/1.4">
+  <type name="midgard_sequence" table="sequence">
+    <property name="id"       type="unsigned integer" primaryfield="id"/>
+    <property name="guid"     type="guid" index="yes"/>
+    <property name="type"     type="string" index="yes"/>
+    <property name="revision"   type="unsigned integer"/>
+  </type>
+</Schema>
