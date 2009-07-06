@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Schema xmlns="http://www.midgard-project.org/repligard/1.4">
-  <type name="midgard_sequence" table="sequence">
-    <property name="id"       type="unsigned integer" primaryfield="id"/>
-    <property name="guid"     type="guid" index="yes"/>
-    <property name="type"     type="string" index="yes"/>
-    <property name="revision"   type="unsigned integer"/>
-  </type>
+    <type name="midgard_sequence" table="sequence">
+        <property name="id" type="unsigned integer" primaryfield="id">
+            <description>Sequence number of the transaction</description>
+        </property>
+        <property name="objectguid" type="guid" index="yes">
+            <description>GUID of the object modified in the transaction</description>
+        </property>
+        <property name="type"     type="string" index="yes">
+            <description>MgdSchema type of the object modified in the transaction</description>
+        </property>
+        <property name="revision"   type="unsigned integer">
+            <description>Revision number of the object modified in the transaction</description>
+        </property>
+    </type>
 </Schema>
