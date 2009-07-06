@@ -31,3 +31,11 @@ routes:
         mimetype: application/json
         allowed_methods:
             - GET
+    ensure_full_commit:
+        controller: org_couchdb_replication_controllers_server
+        action: ensure_full_commit
+        route: '/couchdb/_ensure_full_commit'
+        template_entry_point: midcom-show-json
+        mimetype: application/json
+        allowed_methods:
+            - POST

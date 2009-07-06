@@ -90,7 +90,6 @@ class org_couchdb_replication_controllers_server
         // List the requested sequence data
         
         $qb = new midgard_query_builder('midgard_sequence');
-        
         if (isset($_MIDCOM->dispatcher->get['startkey']))
         {
             $qb->add_constraint('id', '>', (int) $_MIDCOM->dispatcher->get['startkey']);
@@ -158,6 +157,11 @@ class org_couchdb_replication_controllers_server
         }
         
         $this->data[]['ok'] = $status;
+    }
+    
+    public function post_ensure_full_commit(array $args)
+    {
+        $this->data[]['ok'] = true;
     }
 }
 ?>
