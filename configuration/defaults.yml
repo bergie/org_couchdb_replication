@@ -1,8 +1,24 @@
 routes:
     welcome:
-        controller: org_couchdb_replication_controllers_api
+        controller: org_couchdb_replication_controllers_server
         action: welcome
         route: '/'
+        template_entry_point: midcom-show-json
+        mimetype: application/json
+        allowed_methods:
+            - GET
+    database:
+        controller: org_couchdb_replication_controllers_server
+        action: database
+        route: '/couchdb'
+        template_entry_point: midcom-show-json
+        mimetype: application/json
+        allowed_methods:
+            - GET
+    docs_by_sec:
+        controller: org_couchdb_replication_controllers_server
+        action: docs_by_seq
+        route: '/couchdb/_all_docs_by_seq'
         template_entry_point: midcom-show-json
         mimetype: application/json
         allowed_methods:
