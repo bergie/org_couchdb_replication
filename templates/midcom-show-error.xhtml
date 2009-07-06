@@ -1,0 +1,8 @@
+<?php
+// CouchDb wants error messages in JSON format
+header('Content-type: application/json');
+header('HTTP/1.0 404 Object Not Found');
+$data['error'] = 'not_found';
+$data['reason'] = 'missing';
+echo json_encode($data);
+?>
