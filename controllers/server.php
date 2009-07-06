@@ -113,5 +113,40 @@ class org_couchdb_replication_controllers_server
             );
         }
     }
+    
+    public function get_document(array $args)
+    {
+        $object = midgard_object_class::get_object_by_guid($args['guid']);
+        if (   !$object
+            || !$object->guid)
+        {
+            throw new midcom_exception_notfound("Object {$args['guid']} not found");
+        }
+        
+        // Map the object to CoudbDb format
+        $status = array();
+        
+        // CouchDb-specific metadata
+        $status['_id'] = $object->guid;
+        $status['_rev'] = $object->metadata->revision;
+        
+        // Add normal object properties
+        $status = array_merge($status, get_object_vars($object));
+
+        // Remove data we shouldn't send
+        unset($status['id']);
+        unset($status['guid']);
+        unset($status['metadata']);
+        
+        foreach ($status as $key => $val)
+        {
+            if (is_a($val, 'midgard_datetime'))
+            {
+                $status[$key] = $val->format(DATE_ATOM);
+            }
+        }
+        
+        $this->data[]['ok'] = $status;
+    }
 }
 ?>

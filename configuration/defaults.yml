@@ -23,3 +23,11 @@ routes:
         mimetype: application/json
         allowed_methods:
             - GET
+    document:
+        controller: org_couchdb_replication_controllers_server
+        action: document
+        route: '/couchdb/{$guid}'
+        template_entry_point: midcom-show-json
+        mimetype: application/json
+        allowed_methods:
+            - GET
