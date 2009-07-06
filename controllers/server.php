@@ -20,6 +20,11 @@ class org_couchdb_replication_controllers_server
         $this->configuration = $instance->configuration;
     }
 
+    static function get_rev($object)
+    {
+        return $object->metadata->revision . '-' . $object->metadata->revised->format('U');
+    }
+
     /**
      * Handle user authentication. If session is present we use that, otherwise we do Basic authentication.
      */
@@ -54,6 +59,12 @@ class org_couchdb_replication_controllers_server
      */
     public function get_database(array $args)
     {
+        if (strpos($_SERVER['REQUEST_URI'], '_all_docs_by_seq') !== false)
+        {
+            // Work around the bug in request_config->get_argv();
+            return $this->get_docs_by_seq(array());
+        }
+        
         $this->data['db_name'] = 'couchdb';
 
         $this->data['update_seq'] = 0;        
@@ -95,7 +106,7 @@ class org_couchdb_replication_controllers_server
         $transactions = $qb->execute();
         
         // Prepare the data list
-        //$this->data['total_rows'] = count($transactions);
+        $this->data['total_rows'] = count($transactions);
         $this->data['offset'] = 0;
         $this->data['rows'] = array();
         
@@ -108,7 +119,7 @@ class org_couchdb_replication_controllers_server
                 'key' => $transaction->id,
                 'value' => array
                 (
-                    'rev' => $transaction->revision,
+                    'rev' => $transaction->revision . '-' . $transaction->metadata->revised->format('U'),
                 ),
             );
         }
@@ -128,7 +139,7 @@ class org_couchdb_replication_controllers_server
         
         // CouchDb-specific metadata
         $status['_id'] = $object->guid;
-        $status['_rev'] = $object->metadata->revision;
+        $status['_rev'] = org_couchdb_replication_controllers_server::get_rev($object);
         
         // Add normal object properties
         $status = array_merge($status, get_object_vars($object));

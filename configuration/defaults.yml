@@ -10,12 +10,12 @@ routes:
     database:
         controller: org_couchdb_replication_controllers_server
         action: database
-        route: '/couchdb'
+        route: '/couchdb/'
         template_entry_point: midcom-show-json
         mimetype: application/json
         allowed_methods:
             - GET
-    docs_by_sec:
+    docs_by_seq:
         controller: org_couchdb_replication_controllers_server
         action: docs_by_seq
         route: '/couchdb/_all_docs_by_seq'
